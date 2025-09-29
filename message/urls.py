@@ -17,8 +17,13 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
-urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("api/", include("message.urls")),
-]
+from message.viewsets import Chat_roomViewSet, MessageViewSet
+
+router=DefaultRouter()
+router.register(r'chat_rooms', Chat_roomViewSet,basename='chat_rooms')
+router.register(r'messages', MessageViewSet,basename='message')
+
+
+urlpatterns =[path('',include(router.urls)),]
